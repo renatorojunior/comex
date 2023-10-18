@@ -39,21 +39,33 @@ function verificarDisponibilidade($produto, $quantidadeDesejada, $produtos) {
     }
 }
 
-// Exemplos de uso das funções
-adicionarProduto("Amplificador Marshall", 5000.00, 2);
-removerProduto("Guitarra Strato Fender", 3);
-echo verificarDisponibilidade("Guitarra Les Paul Gibson", 2, $produtos).PHP_EOL;
-echo verificarDisponibilidade("Amplificador Marshall", 3, $produtos).PHP_EOL;
-echo verificarDisponibilidade("Amplificador Meteoro", 1, $produtos).PHP_EOL;
+// Função para Analisar os Produtos em Estoque
+function analisarProdutosExtremos($produtos) {
+    $produtoMaisCaro = null;
+    $produtoMaisBarato = null;
+    $precos = array_column($produtos, 'preco');
+    $produtoMaisCaroPreco = max($precos);
+    $produtoMaisBaratoPreco = min($precos);
 
-// Função para exibir a lista de produtos com quantidades em estoque
-function listarProdutosComEstoque($produtos) {
     foreach ($produtos as $produto => $detalhes) {
-        echo "$produto - Preço: R$ " . number_format($detalhes['preco'], 2, ',', '.') . " - Estoque: " . $detalhes['estoque'] . " unidades".PHP_EOL;
-    }    
+        if ($detalhes['preco'] == $produtoMaisCaroPreco) {
+            $produtoMaisCaro = $produto;
+        }
+        if ($detalhes['preco'] == $produtoMaisBaratoPreco) {
+            $produtoMaisBarato = $produto;
+        }
+    }
+
+    return array("mais_caro" => $produtoMaisCaro, "mais_barato" => $produtoMaisBarato);
 }
 
-// Exibindo a lista de produtos com quantidades em estoque
-listarProdutosComEstoque($produtos);
+$precos = array_column($produtos, 'preco');
+$mediaPrecos = array_sum($precos) / count($precos);
+
+$resultado = analisarProdutosExtremos($produtos);
+
+echo "Produto mais caro: " . $resultado['mais_caro'] . " - R$" . number_format($produtos[$resultado['mais_caro']]['preco'], 2, ',', '.') . "" . PHP_EOL;
+echo "Produto mais barato: " . $resultado['mais_barato'] . " - R$" . number_format($produtos[$resultado['mais_barato']]['preco'], 2, ',', '.') . "" . PHP_EOL;
+echo "Média de preços: R$" . number_format($mediaPrecos, 2, ',', '.') . PHP_EOL;
 
 ?>
