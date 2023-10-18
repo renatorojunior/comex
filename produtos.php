@@ -1,14 +1,11 @@
 <?php
 // Lista de produtos 
 $produtos = array(
-    "Guitarra Strato Fender" => 18099.00,
-    "Guitarra Telecaster Fender" => 8788.00,
-    "Guitarra Les Paul Standard Gibson" => 37336.89,
-    "Guitarra Super Strato Ibanez" => 14679.00,
-    "Guitar Flying V Jackson" => 6299.00
+    "Guitarra Strato Fender" => array("preco" => 18099.00, "estoque" => 10),
+    "Guitarra Telecaster Fender" => array("preco" => 8788.00, "estoque" => 5),
+    "Guitarra Les Paul Gibson" => array("preco" => 37336.89, "estoque" => 3),
+    "Guitarra Super Strato Ibanez" => array("preco" => 14679.00, "estoque" => 8),
+    "Guitar Flying V Jackson" => array("preco" => 6299.00, "estoque" => 12)
 );
 
-// Exibindo cada produto
-foreach ($produtos as $produto => $preco) {
-    echo "$produto - R$ " . number_format($preco, 2, ',', '.')." ".PHP_EOL;
-}
+?>
