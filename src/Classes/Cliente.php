@@ -1,6 +1,6 @@
 <?php
 
-namespace Renato\Comex;
+namespace Renato\Comex\Classes;
 
 // Desenvolvendo a Classe Cliente
 class Cliente {
