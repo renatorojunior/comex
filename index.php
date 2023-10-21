@@ -48,5 +48,27 @@ $pedido->adicionarProduto($produto2, 1);
 //Mostra Detalhes do Pedido
 $pedido->mostrarDetalhesPedido();
 
+echo "----------------------------------------------------------------" . PHP_EOL;
+
+$produto3 = new Produto("0378", "Pedaleira BOSS GX-100", 5354.15, 4);
+$produto4 = new Produto("0984", "Transmissor Wirelles Line 6 - G30", 1081.62, 10);
+
+$pedido2 = new Pedido(002, $cliente, []);
+$pedido2->adicionarProduto($produto3, 1);
+$pedido2->adicionarProduto($produto4, 1);
+
+// Adicionando pedidos à lista de pedidos do cliente
+$cliente->adicionarPedido($pedido);
+$cliente->adicionarPedido($pedido2);
+
+// Obtendo a lista de pedidos do cliente
+$listaPedidos = $cliente->getPedidos();
+
+// Iterando sobre a lista de pedidos e mostrando detalhes
+foreach ($listaPedidos as $pedido) {
+    $pedido->mostrarDetalhesPedido();
+
+    echo PHP_EOL;
+}
 
 ?>

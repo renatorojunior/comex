@@ -10,6 +10,7 @@ class Cliente {
     private string $celular;
     private string $endereco;
     private float $totalCompras;
+    private array $pedidos;
 
     public function __construct(string $cpf, string $nome, string $email, string $celular, string $endereco) {
         $this->cpf = $cpf;
@@ -18,6 +19,7 @@ class Cliente {
         $this->celular = $celular;
         $this->endereco = $endereco;
         $this->totalCompras = 0.0;
+        $this->pedidos = [];
     }
 
     // Implementando Getters e Setters
@@ -67,6 +69,20 @@ class Cliente {
 
     public function setTotalCompras(float $totalCompras): void {
         $this->totalCompras = $totalCompras;
+    }
+
+    // Getter e Setter para o atributo de pedidos
+    public function getPedidos(): array {
+        return $this->pedidos;
+    }
+
+    public function setPedidos(array $pedidos): void {
+        $this->pedidos = $pedidos;
+    }
+
+    // Método para adicionar um pedido à lista de pedidos do cliente
+    public function adicionarPedido(Pedido $pedido): void {
+        $this->pedidos[] = $pedido;
     }
 }
 
