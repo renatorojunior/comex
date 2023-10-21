@@ -1,0 +1,16 @@
+{
+    "name": "renato/comex",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Renato\\Comex\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Renato Rodrigues",
+            "email": "renato.rojunior@gmail.com"
+        }
+    ],
+    "require": {}
+}
