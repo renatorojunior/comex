@@ -5,6 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Renato\Comex\Classes\Cliente;
 use Renato\Comex\Classes\Produto;
 use Renato\Comex\Classes\Pedido;
+use Renato\Comex\Classes\CarrinhoDeCompras;
 
 // Exemplo de uso da classe Cliente
 $cliente = new Cliente("438.606.060-00", "Guilherme Augusto Bartolomeu", "guilherme.abartolomeu@email.com", "(13) 98765-4321", "Rua General Oliveira, 523");
@@ -70,5 +71,21 @@ foreach ($listaPedidos as $pedido) {
 
     echo PHP_EOL;
 }
+
+echo "----------------------------------------------------------------" . PHP_EOL;
+
+$carrinho = new CarrinhoDeCompras();
+$carrinho->adicionarProduto($produto, 1);
+$carrinho->adicionarProduto($produto3, 1);
+$carrinho->adicionarProduto($produto4, 1);
+
+echo "Produtos no carrinho:" . PHP_EOL;
+$carrinho->mostrarProdutos();
+
+$percentualDesconto = 10; // 10% de desconto
+$valorFrete = 25.0; // R$ 25,00 de frete
+
+$totalCompra = $carrinho->calcularTotalCompra($percentualDesconto, $valorFrete);
+echo "Total da compra com desconto e frete: R$ " .  number_format($totalCompra, 2, ',', '.') . PHP_EOL;
 
 ?>
