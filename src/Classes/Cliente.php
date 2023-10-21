@@ -16,7 +16,7 @@ class Cliente {
         $this->cpf = $cpf;
         $this->nome = $nome;
         $this->email = $email;
-        $this->celular = $celular;
+        $this->celular = $this->formatarNumeroCelular($celular);
         $this->endereco = $endereco;
         $this->totalCompras = 0.0;
         $this->pedidos = [];
@@ -52,7 +52,8 @@ class Cliente {
     }
 
     public function setCelular(string $celular): void {
-        $this->celular = $celular;
+        // Formatar o número de celular antes de atribuir à propriedade
+        $this->celular = $this->formatarNumeroCelular($celular);
     }
 
     public function getEndereco(): string {
@@ -83,6 +84,29 @@ class Cliente {
     // Método para adicionar um pedido à lista de pedidos do cliente
     public function adicionarPedido(Pedido $pedido): void {
         $this->pedidos[] = $pedido;
+    }
+
+    // Método para formatar o número de celular usando regex
+    private function formatarNumeroCelular(string $celular): string {
+        // Remove caracteres não numéricos do número de celular
+        $celularNumerico = preg_replace('/\D/', '', $celular);
+
+        // Aplica a máscara usando regex
+        if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $celularNumerico, $matches)) {
+            return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+        }
+
+        // Se o número de celular não corresponder ao padrão, retorna o número original
+        return $celular;
+    }
+
+    //Exibir Detalhes do Cliente
+    public function exibirDadosCliente(): void {
+        echo "Nome: {$this->nome}" . PHP_EOL;
+        echo "CPF: {$this->cpf}" . PHP_EOL;
+        echo "E-mail: {$this->email}" . PHP_EOL;
+        echo "Celular: {$this->celular}" . PHP_EOL;
+        echo "Endereço: {$this->endereco}" . PHP_EOL;
     }
 }
 

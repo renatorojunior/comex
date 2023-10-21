@@ -88,4 +88,12 @@ $valorFrete = 25.0; // R$ 25,00 de frete
 $totalCompra = $carrinho->calcularTotalCompra($percentualDesconto, $valorFrete);
 echo "Total da compra com desconto e frete: R$ " .  number_format($totalCompra, 2, ',', '.') . PHP_EOL;
 
+echo "----------------------------------------------------------------" . PHP_EOL;
+
+$cliente->exibirDadosCliente();
+
+echo PHP_EOL;
+
+$cliente->setCelular("13981596915");
+$cliente->exibirDadosCliente();
 ?>
