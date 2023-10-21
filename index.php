@@ -4,6 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Renato\Comex\Classes\Cliente;
 use Renato\Comex\Classes\Produto;
+use Renato\Comex\Classes\Pedido;
 
 // Exemplo de uso da classe Cliente
 $cliente = new Cliente("438.606.060-00", "Guilherme Augusto Bartolomeu", "guilherme.abartolomeu@email.com", "(13) 98765-4321", "Rua General Oliveira, 523");
@@ -34,5 +35,18 @@ echo "Nome do Produto: " . $produto->getNome() . PHP_EOL;
 echo "Preço do Produto: R$ " . number_format($produto->getPreco(), 2, ',', '.') . PHP_EOL;
 echo "Quantidade em Estoque: " . $produto->getQuantidadeEstoque() . PHP_EOL;
 echo "Valor Total em Estoque: R$ " . number_format($produto->calcularValorTotal(), 2, ',', '.') . PHP_EOL;
+
+echo "----------------------------------------------------------------" . PHP_EOL;
+
+$produto2 = new Produto("0502", "Amplificador Marshall", 6036.99, 3);
+
+//Faz Pedido
+$pedido = new Pedido(001, $cliente, []);
+$pedido->adicionarProduto($produto, 1);
+$pedido->adicionarProduto($produto2, 1);
+
+//Mostra Detalhes do Pedido
+$pedido->mostrarDetalhesPedido();
+
 
 ?>

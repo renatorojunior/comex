@@ -6,10 +6,10 @@ namespace Renato\Comex\Classes;
 class Produto {
     private string $codigo;
     private string $nome;
-    private  $preco;
+    private float $preco;
     private int $quantidadeEstoque;
 
-    public function __construct(string $codigo, string $nome,  $preco, int $quantidadeEstoque) {
+    public function __construct(string $codigo, string $nome, float $preco, int $quantidadeEstoque) {
         $this->codigo = $codigo;
         $this->nome = $nome;
         $this->preco = $preco;
@@ -70,10 +70,15 @@ class Produto {
             echo "Erro: Produto com código '$codigo' não encontrado." . PHP_EOL; 
         }
     }
-
+    
     public function calcularValorTotal(): float {
         return $this->preco * $this->quantidadeEstoque;
-    }    
+    }
+    
+    public function exibirEstoque(): void {
+        echo "Produto: " . $this->nome . PHP_EOL;
+        echo "Quantidade em Estoque: " . $this->quantidadeEstoque . PHP_EOL;
+    }
 }
 
 ?>
