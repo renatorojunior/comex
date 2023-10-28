@@ -2,6 +2,8 @@
 
 namespace Renato\Comex\Classes;
 
+use InvalidArgumentException;
+
 // Desenvolvendo a Classe Produto
 class Produto {
     private string $codigo;
@@ -50,24 +52,40 @@ class Produto {
     }
 
     public function adicionarProduto(string $codigo, int $quantidade): void {
-        if ($this->codigo === $codigo) {
-            $this->quantidadeEstoque += $quantidade;
-            echo "Produto adicionado com sucesso. Nova quantidade em estoque: " . $this->quantidadeEstoque . PHP_EOL;
-        } else {
-            echo "Erro: Produto com código '$codigo' não encontrado." . PHP_EOL;
+        try {
+            if ($this->codigo === $codigo) {
+                if ($quantidade <= 0) {
+                    throw new InvalidArgumentException("A quantidade a ser adicionada deve ser maior que zero.");
+                }
+
+                $this->quantidadeEstoque += $quantidade;
+                echo "Produto adicionado com sucesso. Nova quantidade em estoque: " . $this->quantidadeEstoque . PHP_EOL;
+            } else {
+                throw new InvalidArgumentException("Produto com código '$codigo' não encontrado.");
+            }
+        } catch (InvalidArgumentException $e) {
+            echo "Erro ao adicionar produto: " . $e->getMessage() . PHP_EOL;
         }
     }
 
     public function removerProduto(string $codigo, int $quantidade): void {
-        if ($this->codigo === $codigo) {
-            if ($quantidade <= $this->quantidadeEstoque) {
+        try {
+            if ($this->codigo === $codigo) {
+                if ($quantidade <= 0) {
+                    throw new InvalidArgumentException("A quantidade a ser removida deve ser maior que zero.");
+                }
+
+                if ($quantidade > $this->quantidadeEstoque) {
+                    throw new InvalidArgumentException("Quantidade insuficiente em estoque.");
+                }
+
                 $this->quantidadeEstoque -= $quantidade;
                 echo "Produto removido com sucesso. Nova quantidade em estoque: " . $this->quantidadeEstoque . PHP_EOL;
             } else {
-                echo "Erro: Quantidade insuficiente em estoque." . PHP_EOL;
+                throw new InvalidArgumentException("Produto com código '$codigo' não encontrado.");
             }
-        } else {
-            echo "Erro: Produto com código '$codigo' não encontrado." . PHP_EOL; 
+        } catch (InvalidArgumentException $e) {
+            echo "Erro ao remover produto: " . $e->getMessage() . PHP_EOL;
         }
     }
     
