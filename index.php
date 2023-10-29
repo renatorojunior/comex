@@ -3,6 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Renato\Comex\Modelo\{Cliente, Produto, Pedido, CarrinhoDeCompras};
+use Renato\Comex\MeioDePagamento\{Boleto, CartaoDeCredito, Pix};
 
 // Lista de Clientes
 $cliente1 = new Cliente("438.606.060-00", "Guilherme Augusto Bartolomeu", "guilherme.abartolomeu@email.com", "(13) 98765-4321", "Rua General Oliveira, 523");
@@ -50,5 +51,30 @@ $cliente1->adicionarPedido($pedido1); //Tentando adicionar pedido na incluido na
 $cliente1->setCelular('129515d111595'); //Tentando setar celular com formato invalido. 
 $produto1->exibirEstoque("0452"); //Tentando exibir a quantidade de um produto em estoque com código errado.
 $pedido2->adicionarProduto($produto2, -2); //Tentando adicionar produto ao carrinho com quantidade negativa.
+
+echo "----------------------------------------------------------------" . PHP_EOL;
+
+// Exemplo de uso de pagamento com a classe Pix.
+echo "- Pagamento via Boleto:" . PHP_EOL . PHP_EOL;
+$pagamentoPix = new Pix($cliente1);
+$valorCompra = 100.25;
+
+$pagamentoPix->processarPagamento($valorCompra);
+echo PHP_EOL;
+
+// Exemplo de uso de pagamento com a classe CartaoDeCredito.
+echo "- Pagamento via Cartão de Crédito:" . PHP_EOL . PHP_EOL;
+$pagamentoCartaoDeCredito = new CartaoDeCredito("1234 5678 8765 4321", $cliente1, "123");
+$valorCompra = 200.75;
+
+$pagamentoCartaoDeCredito->processarPagamento($valorCompra);
+echo PHP_EOL;
+
+// Exemplo de uso de pagamento com a classe Pix.
+echo "- Pagamento via Pix:" . PHP_EOL . PHP_EOL;
+$pagamentoPix = new Pix($cliente1);
+$valorCompra = 350.99;
+
+$pagamentoPix->processarPagamento($valorCompra);
 
 ?>
