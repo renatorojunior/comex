@@ -3,6 +3,7 @@
 namespace Renato\Comex\Modelo;
 
 use InvalidArgumentException;
+use Renato\Comex\Exception\NotFoundProductException;
 
 //Classe Produto
 class Produto {
@@ -102,10 +103,10 @@ class Produto {
                 echo "Produto: " . $this->nome . PHP_EOL;
                 echo "Quantidade em Estoque: " . $this->quantidadeEstoque . PHP_EOL;
             } else {
-                throw new InvalidArgumentException("Produto com código '$codigoProduto' não encontrado.");
+                throw new NotFoundProductException();
             }
-        } catch (InvalidArgumentException $e) {
-            echo "Erro ao exibir estoque: " . $e->getMessage() . PHP_EOL;
+        } catch (NotFoundProductException $e) {
+            echo "Erro ao exibir produto estoque: " . $e->getMessage() . PHP_EOL;
         }
     }
 }

@@ -75,4 +75,8 @@ $pagamentoPix = new Pix($cliente1);
 $valorCompra = 350.99;
 $pagamentoPix->processarPagamento($valorCompra);
 
+echo "----------------------------------------------------------------" . PHP_EOL;
+
+$produto1->exibirEstoque('456'); // Tenta exibir o estoque de um produto com código inexistente
+
 ?>

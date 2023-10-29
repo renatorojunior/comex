@@ -89,6 +89,7 @@ class Pedido {
         }
         echo "Valor Total do pedido: R$ " . number_format($this->calcularValorTotal(), 2, ',', '.') . PHP_EOL;
     }
+        
 }
 
 ?>
