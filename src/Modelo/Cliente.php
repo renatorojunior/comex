@@ -1,8 +1,10 @@
 <?php
 
-namespace Renato\Comex\Classes;
+namespace Renato\Comex\Modelo;
 
-// Desenvolvendo a Classe Cliente
+use InvalidArgumentException, LogicException;
+
+//Classe Cliente
 class Cliente {
     private string $cpf;
     private string $nome;
@@ -22,7 +24,7 @@ class Cliente {
         $this->pedidos = [];
     }
 
-    // Implementando Getters e Setters
+    //Getters e Setters
     public function getCpf(): string {
         return $this->cpf;
     }
@@ -72,7 +74,6 @@ class Cliente {
         $this->totalCompras = $totalCompras;
     }
 
-    // Getter e Setter para o atributo de pedidos
     public function getPedidos(): array {
         return $this->pedidos;
     }
@@ -81,23 +82,45 @@ class Cliente {
         $this->pedidos = $pedidos;
     }
 
-    // Método para adicionar um pedido à lista de pedidos do cliente
+    // Método para adicionar um pedido à lista de pedidos do cliente com tratamento de Exceções
     public function adicionarPedido(Pedido $pedido): void {
-        $this->pedidos[] = $pedido;
+        try {
+            if ($pedido === null) {
+                throw new InvalidArgumentException("Pedido inválido. Deve ser uma instância da classe Pedido.");
+            }
+            
+            // Verifica se o pedido já existe na lista de pedidos
+            foreach ($this->pedidos as $p) {
+                if ($p->getId() === $pedido->getId()) {
+                    throw new InvalidArgumentException("Pedido já existe na lista de pedidos.");
+                }
+            }
+            
+            // Se não existir, adiciona o novo pedido à lista
+            $this->pedidos[] = $pedido;
+            
+        } catch (InvalidArgumentException $e) {
+            echo "Erro ao adicionar pedido: " . $e->getMessage() . PHP_EOL;
+        }
     }
 
-    // Método para formatar o número de celular usando regex
+    // Método para formatar o número de celular usando regex com tratamento de Exceções
     private function formatarNumeroCelular(string $celular): string {
-        // Remove caracteres não numéricos do número de celular
-        $celularNumerico = preg_replace('/\D/', '', $celular);
+        try {
+            // Remove caracteres não numéricos do número de celular
+            $celularNumerico = preg_replace('/\D/', '', $celular);
 
-        // Aplica a máscara usando regex
-        if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $celularNumerico, $matches)) {
-            return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+            // Aplica a máscara usando regex
+            if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $celularNumerico, $matches)) {
+                return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+            }
+
+            // Se o número de celular não corresponder ao padrão, lança uma exceção
+            throw new LogicException("Número de celular inválido.");
+        } catch (LogicException $e) {
+            echo "Erro ao formatar número de celular: " . $e->getMessage() . PHP_EOL;
+            return $celular; // Retorna o número original em caso de erro
         }
-
-        // Se o número de celular não corresponder ao padrão, retorna o número original
-        return $celular;
     }
 
     //Exibir Detalhes do Cliente

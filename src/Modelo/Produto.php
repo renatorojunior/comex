@@ -1,10 +1,10 @@
 <?php
 
-namespace Renato\Comex\Classes;
+namespace Renato\Comex\Modelo;
 
 use InvalidArgumentException;
 
-// Desenvolvendo a Classe Produto
+//Classe Produto
 class Produto {
     private string $codigo;
     private string $nome;
@@ -18,7 +18,7 @@ class Produto {
         $this->quantidadeEstoque = $quantidadeEstoque;
     }
 
-    //Implementando Getters e Setters
+    //Getters e Setters
     public function getCodigo(): string {
         return $this->codigo;
     }
@@ -51,6 +51,7 @@ class Produto {
         $this->quantidadeEstoque = $quantidadeEstoque;
     }
 
+    // Método para adicionar uma quantidade de produtos ao estoque com tratamento de exceçõeos
     public function adicionarProduto(string $codigo, int $quantidade): void {
         try {
             if ($this->codigo === $codigo) {
@@ -68,6 +69,7 @@ class Produto {
         }
     }
 
+    // Método para remover uma quantidade de produtos do estoque com tratamento de exceções
     public function removerProduto(string $codigo, int $quantidade): void {
         try {
             if ($this->codigo === $codigo) {
@@ -93,9 +95,18 @@ class Produto {
         return $this->preco * $this->quantidadeEstoque;
     }
     
-    public function exibirEstoque(): void {
-        echo "Produto: " . $this->nome . PHP_EOL;
-        echo "Quantidade em Estoque: " . $this->quantidadeEstoque . PHP_EOL;
+    // Método para exibir o estoque do produto com validação do código do produto com tratamento de exceções
+    public function exibirEstoque(string $codigoProduto): void {
+        try {
+            if ($this->codigo === $codigoProduto) {
+                echo "Produto: " . $this->nome . PHP_EOL;
+                echo "Quantidade em Estoque: " . $this->quantidadeEstoque . PHP_EOL;
+            } else {
+                throw new InvalidArgumentException("Produto com código '$codigoProduto' não encontrado.");
+            }
+        } catch (InvalidArgumentException $e) {
+            echo "Erro ao exibir estoque: " . $e->getMessage() . PHP_EOL;
+        }
     }
 }
 
