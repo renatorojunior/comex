@@ -56,9 +56,9 @@ echo "----------------------------------------------------------------" . PHP_EO
 
 // Exemplo de uso de pagamento com a classe Pix.
 echo "- Pagamento via Boleto:" . PHP_EOL . PHP_EOL;
-$pagamentoPix = new Pix($cliente1);
+$vencido = (bool) rand(0, 1);
+$pagamentoPix = new Boleto($cliente1, $vencido);
 $valorCompra = 100.25;
-
 $pagamentoPix->processarPagamento($valorCompra);
 echo PHP_EOL;
 
@@ -66,7 +66,6 @@ echo PHP_EOL;
 echo "- Pagamento via Cartão de Crédito:" . PHP_EOL . PHP_EOL;
 $pagamentoCartaoDeCredito = new CartaoDeCredito("1234 5678 8765 4321", $cliente1, "123");
 $valorCompra = 200.75;
-
 $pagamentoCartaoDeCredito->processarPagamento($valorCompra);
 echo PHP_EOL;
 
@@ -74,7 +73,6 @@ echo PHP_EOL;
 echo "- Pagamento via Pix:" . PHP_EOL . PHP_EOL;
 $pagamentoPix = new Pix($cliente1);
 $valorCompra = 350.99;
-
 $pagamentoPix->processarPagamento($valorCompra);
 
 ?>

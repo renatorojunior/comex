@@ -25,10 +25,9 @@ class CartaoDeCredito implements MeioDePagamento {
                 echo "Aguarde validação de senha." . PHP_EOL;
                 
                 sleep(3); // Simula validação de senha                
-                $randomNumber = rand(0, 1);
-                $randomNumber *= 10;
-                $randomNumber = round($randomNumber);
-                $senhaDigitada = ($randomNumber < 5) ? "123" : "321";
+                $randomNumber = rand(0, 1);                                
+                $senhaDigitada = ($randomNumber === 1) ? "123" : "321";
+                var_dump($senhaDigitada);
 
                 if ($senhaDigitada !== $this->senha) {
                     throw new InvalidArgumentException("Pagamento recusado. Senha incorreta.");
