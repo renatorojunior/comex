@@ -101,7 +101,7 @@ class Cliente {
     
 
     // Método para formatar o número de celular usando regex com tratamento de Exceções
-    protected function formatarNumeroCelular(string $celular): string {
+    private function formatarNumeroCelular(string $celular): string {
         try {
             // Remove caracteres não numéricos do número de celular
             $celularNumerico = preg_replace('/\D/', '', $celular);

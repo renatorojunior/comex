@@ -8,6 +8,11 @@ use InvalidArgumentException, LogicException;
 class CarrinhoDeCompras {
     private array $produtos = [];
 
+    // Método para obter a lista de produtos no carrinho
+    public function getProdutos(): array {
+        return $this->produtos;
+    }
+
     // Método para adicionar um produto ao carrinho com tratamento de Exceções
     public function adicionarProduto(Produto $produto, int $quantidade): void {
         try {
@@ -28,7 +33,6 @@ class CarrinhoDeCompras {
                 if ($item['produto'] === $produto) {
                     unset($this->produtos[$key]);
                     $produtoEncontrado = true;
-                    break;
                 }
             }
             if (!$produtoEncontrado) {
