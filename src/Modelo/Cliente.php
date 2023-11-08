@@ -83,29 +83,25 @@ class Cliente {
     }
 
     // Método para adicionar um pedido à lista de pedidos do cliente com tratamento de Exceções
-    public function adicionarPedido(Pedido $pedido): void {
-        try {
-            if ($pedido === null) {
-                throw new InvalidArgumentException("Pedido inválido. Deve ser uma instância da classe Pedido.");
-            }
-            
-            // Verifica se o pedido já existe na lista de pedidos
-            foreach ($this->pedidos as $p) {
-                if ($p->getId() === $pedido->getId()) {
-                    throw new InvalidArgumentException("Pedido já existe na lista de pedidos.");
-                }
-            }
-            
-            // Se não existir, adiciona o novo pedido à lista
-            $this->pedidos[] = $pedido;
-            
-        } catch (InvalidArgumentException $e) {
-            echo "Erro ao adicionar pedido: " . $e->getMessage() . PHP_EOL;
+    public function adicionarPedido(?Pedido $pedido): void {
+        if ($pedido === null) {
+            throw new InvalidArgumentException("Pedido inválido. Deve ser uma instância da classe Pedido.");
         }
+    
+        // Verifica se o pedido já existe na lista de pedidos
+        foreach ($this->pedidos as $p) {
+            if ($p->getId() === $pedido->getId()) {
+                throw new InvalidArgumentException("Pedido já existe na lista de pedidos.");
+            }
+        }
+    
+        // Se não existir, adiciona o novo pedido à lista
+        $this->pedidos[] = $pedido;
     }
+    
 
     // Método para formatar o número de celular usando regex com tratamento de Exceções
-    private function formatarNumeroCelular(string $celular): string {
+    protected function formatarNumeroCelular(string $celular): string {
         try {
             // Remove caracteres não numéricos do número de celular
             $celularNumerico = preg_replace('/\D/', '', $celular);

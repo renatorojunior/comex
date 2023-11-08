@@ -1,3 +1,25 @@
+Cliente (Renato\Comex\Tests\Modelo\Cliente)
+ [x] Criacao cliente
+ [x] Get cpf
+ [x] Get nome
+ [x] Get email
+ [x] Get celular
+ [x] Get endereco
+ [x] Get total compras
+ [x] Get pedidos
+ [x] Set cpf
+ [x] Set nome
+ [x] Set email
+ [x] Set celular
+ [x] Set endereco
+ [x] Set total compras
+ [x] Set pedidos
+ [x] Adicionar pedido com sucesso
+ [x] Adicionar pedido duplicado
+ [x] Adicionar pedido com pedido nulo
+ [x] Formatar numero celular com sucesso
+ [x] Exibir dados cliente
+
 Pedido (Renato\Comex\Tests\Modelo\Pedido)
  [x] Construtor pedido
  [x] Get id
