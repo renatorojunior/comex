@@ -1,3 +1,18 @@
+Pedido (Renato\Comex\Tests\Modelo\Pedido)
+ [x] Construtor pedido
+ [x] Get id
+ [x] Get cliente
+ [x] Get produtos
+ [x] Get nome
+ [x] Get preco
+ [x] Get quantidade estoque
+ [x] Set codigo
+ [x] Set nome
+ [x] Set preco
+ [x] Set quantidade estoque
+ [x] Adicionar produto ao pedido
+ [x] Calcular valor total
+
 Produto (Renato\Comex\Tests\Modelo\Produto)
  [x] Construtor produto
  [x] Set codigo
