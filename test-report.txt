@@ -29,6 +29,9 @@ Cliente (Renato\Comex\Tests\Modelo\Cliente)
  [x] Formatar numero celular com sucesso
  [x] Exibir dados cliente
 
+Meio De Pagamento (Renato\Comex\Tests\MeioDePagamento\MeioDePagamento)
+ [x] Processar pagamento com sucesso
+
 Pedido (Renato\Comex\Tests\Modelo\Pedido)
  [x] Construtor pedido
  [x] Get id
