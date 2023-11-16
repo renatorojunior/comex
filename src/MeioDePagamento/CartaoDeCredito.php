@@ -17,43 +17,37 @@ class CartaoDeCredito implements MeioDePagamento {
         $this->senha = $senha;
     }
 
-    public function processarPagamento(float $valor) {
+    public function processarPagamento(float $valor): bool {
         $tentativas = 3;
-    
+        
         while ($tentativas > 0) {
             try {
-                echo "Aguarde validação de senha." . PHP_EOL;
-                
-                sleep(3); // Simula validação de senha                
-                $randomNumber = rand(0, 1);                                
-                $senhaDigitada = ($randomNumber === 1) ? "123" : "321";                
-
+                // Simula validação de senha                
+                $randomNumber = rand(0, 1);
+                $senhaDigitada = ($randomNumber === 1) ? "123" : "321";
+    
                 if ($senhaDigitada !== $this->senha) {
-                    throw new InvalidArgumentException("Pagamento recusado. Senha incorreta.");
+                    throw new \InvalidArgumentException("Pagamento recusado. Senha incorreta.");
                 }
                 
-                echo "Processando pagamento..." . PHP_EOL;
-    
-                sleep(5); // Simula um processamento de pagamento
-                
-                $pagamento = rand(0, 1); // Simula resultado da verificação (0: pagamento recusado, 1: pagamento aprovado)
+                // Simula um processamento de pagamento               
+                $pagamento = rand(0, 1);
     
                 if ($pagamento === 1) {
-                    echo "Pagamento de R$ " . number_format($valor, 2, ',', '.') . " via Cartão de Crédito (**** **** **** " . substr($this->numeroCartao, -4) . ") em nome de " . $this->cliente->getNome() . " foi processado com sucesso." . PHP_EOL;
-                    return; // Pagamento bem-sucedido, sai do loop
+                    return true; // Pagamento bem-sucedido
                 } else {
-                    throw new LogicException("Pagamento recusado pelo seu banco.");
+                    throw new \LogicException("Pagamento recusado pelo seu banco.");
                 }
-            } catch (InvalidArgumentException $e) {
-                echo "Erro ao processar pagamento: " . $e->getMessage() . PHP_EOL;
-            } catch (LogicException $e) {
-                echo "Erro ao processar pagamento: " . $e->getMessage() . PHP_EOL;
+            } catch (\InvalidArgumentException $e) {                
+                throw $e;
+            } catch (\LogicException $e) {                
+                throw $e;
             }
-    
+        
             $tentativas--;
         }
-    
-        echo "Número máximo de tentativas excedido. O pagamento foi recusado." . PHP_EOL;
+        
+        return false; // Número máximo de tentativas excedido, o pagamento foi recusado
     }
 }    
 

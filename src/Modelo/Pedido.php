@@ -43,26 +43,23 @@ class Pedido {
 
     // Método para adicionar produto ao pedido com tratamento de exceções.
     public function adicionarProduto(Produto $produto, int $quantidade): void {
-        try {
-            // Verifica se o produto já existe no pedido
-            foreach ($this->produtos as &$item) {
-                if ($item['produto']->getCodigo() === $produto->getCodigo()) {
-                    if ($quantidade <= 0) {
-                        throw new InvalidArgumentException("A quantidade deve ser maior que zero.");
-                    }
-                    $item['quantidade'] += $quantidade;
-                    return;
-                }
-            }
-            // Se não existir, adiciona o produto ao pedido
-            if ($quantidade <= 0) {
-                throw new InvalidArgumentException("A quantidade deve ser maior que zero.");
-            }
-            $this->produtos[] = ['produto' => $produto, 'quantidade' => $quantidade];
-        } catch (InvalidArgumentException $e) {
-            echo "Erro ao adicionar produto ao pedido: " . $e->getMessage() . PHP_EOL;
+        if ($quantidade <= 0) {
+            throw new InvalidArgumentException("A quantidade deve ser maior que zero.");
         }
+    
+        // Itera sobre os produtos existentes no pedido
+        foreach ($this->produtos as &$item) {
+            if ($item['produto']->getCodigo() === $produto->getCodigo()) {
+                // Se o produto já existe, atualiza a quantidade
+                $item['quantidade'] += $quantidade;
+                return;
+            }
+        }
+    
+        // Se o produto não existe, adiciona ao pedido
+        $this->produtos[] = ['produto' => $produto, 'quantidade' => $quantidade];
     }
+    
 
     // Método calcular valor total do pedido com tratamento de Exceções.
     public function calcularValorTotal(): float {
