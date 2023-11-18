@@ -1,30 +1,35 @@
 <?php
 
-namespace Renato\Comex\Modelo;
+namespace Renato\Comex\Domain\Model;
 
 use InvalidArgumentException, LogicException;
 
 //Classe Cliente
-class Cliente {
+class Client {
+    private string $id;
     private string $cpf;
-    private string $nome;
+    private string $name;
     private string $email;
-    private string $celular;
-    private string $endereco;
+    private string $cellphone;
+    private string $address;
     private float $totalCompras;
-    private array $pedidos;
+    private array $orders;
 
-    public function __construct(string $cpf, string $nome, string $email, string $celular, string $endereco) {
+    public function __construct(string $cpf, string $name, string $email, string $cellphone, string $address) {
         $this->cpf = $cpf;
-        $this->nome = $nome;
+        $this->name = $name;
         $this->email = $email;
-        $this->celular = $this->formatarNumeroCelular($celular);
-        $this->endereco = $endereco;
+        $this->cellphone = $this->formatCellphone($cellphone);
+        $this->address = $address;
         $this->totalCompras = 0.0;
-        $this->pedidos = [];
+        $this->orders = [];
     }
 
     //Getters e Setters
+    public function getClientId(): string {
+        return $this->id;
+    }
+
     public function getCpf(): string {
         return $this->cpf;
     }
@@ -33,37 +38,37 @@ class Cliente {
         $this->cpf = $cpf;
     }
 
-    public function getNome(): string {
-        return $this->nome;
+    public function getClientName(): string {
+        return $this->name;
     }
 
-    public function setNome(string $nome): void {
-        $this->nome = $nome;
+    public function setClientName(string $name): void {
+        $this->name = $name;
     }
 
-    public function getEmail(): string {
+    public function getClientEmail(): string {
         return $this->email;
     }
 
-    public function setEmail(string $email): void {
+    public function setClientEmail(string $email): void {
         $this->email = $email;
     }
 
-    public function getCelular(): string {
-        return $this->celular;
+    public function getCellphone(): string {
+        return $this->cellphone;
     }
 
-    public function setCelular(string $celular): void {
+    public function setCelular(string $cellphone): void {
         // Formatar o número de celular antes de atribuir à propriedade
-        $this->celular = $this->formatarNumeroCelular($celular);
+        $this->cellphone = $this->formatCellphone($cellphone);
     }
 
-    public function getEndereco(): string {
-        return $this->endereco;
+    public function getaddress(): string {
+        return $this->address;
     }
 
-    public function setEndereco(string $endereco): void {
-        $this->endereco = $endereco;
+    public function setaddress(string $address): void {
+        $this->address = $address;
     }
 
     public function getTotalCompras(): float {
@@ -75,39 +80,39 @@ class Cliente {
     }
 
     public function getPedidos(): array {
-        return $this->pedidos;
+        return $this->orders;
     }
 
-    public function setPedidos(array $pedidos): void {
-        $this->pedidos = $pedidos;
+    public function setPedidos(array $orders): void {
+        $this->orders = $orders;
     }
 
     // Método para adicionar um pedido à lista de pedidos do cliente com tratamento de Exceções
-    public function adicionarPedido(?Pedido $pedido): void {
-        if ($pedido === null) {
+    public function addOrder(?Order $order): void {
+        if ($order === null) {
             throw new InvalidArgumentException("Pedido inválido. Deve ser uma instância da classe Pedido.");
         }
     
         // Verifica se o pedido já existe na lista de pedidos
-        foreach ($this->pedidos as $p) {
-            if ($p->getId() === $pedido->getId()) {
+        foreach ($this->orders as $o) {
+            if ($o->getOrderId() === $order->getOrderId()) {
                 throw new InvalidArgumentException("Pedido já existe na lista de pedidos.");
             }
         }
     
         // Se não existir, adiciona o novo pedido à lista
-        $this->pedidos[] = $pedido;
+        $this->orders[] = $order;
     }
     
 
     // Método para formatar o número de celular usando regex com tratamento de Exceções
-    private function formatarNumeroCelular(string $celular): string {
+    private function formatCellphone(string $cellphone): string {
         try {
             // Remove caracteres não numéricos do número de celular
-            $celularNumerico = preg_replace('/\D/', '', $celular);
+            $cellphoneInserted = preg_replace('/\D/', '', $cellphone);
 
             // Aplica a máscara usando regex
-            if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $celularNumerico, $matches)) {
+            if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $cellphoneInserted, $matches)) {
                 return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
             }
 
@@ -115,17 +120,17 @@ class Cliente {
             throw new LogicException("Número de celular inválido.");
         } catch (LogicException $e) {
             echo "Erro ao formatar número de celular: " . $e->getMessage() . PHP_EOL;
-            return $celular; // Retorna o número original em caso de erro
+            return $cellphone; // Retorna o número original em caso de erro
         }
     }
 
     //Exibir Detalhes do Cliente
     public function exibirDadosCliente(): void {
-        echo "Nome: {$this->nome}" . PHP_EOL;
+        echo "name: {$this->name}" . PHP_EOL;
         echo "CPF: {$this->cpf}" . PHP_EOL;
         echo "E-mail: {$this->email}" . PHP_EOL;
-        echo "Celular: {$this->celular}" . PHP_EOL;
-        echo "Endereço: {$this->endereco}" . PHP_EOL;
+        echo "Celular: {$this->cellphone}" . PHP_EOL;
+        echo "Endereço: {$this->address}" . PHP_EOL;
     }
 }
 

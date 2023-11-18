@@ -1,37 +1,37 @@
 <?php
 
-namespace Renato\Comex\Modelo;
+namespace Renato\Comex\Domain\Model;
 
 use InvalidArgumentException, LogicException;
 
 // Classe Carrinho de Compras
-class CarrinhoDeCompras {
-    private array $produtos = [];
+class Cart {
+    private array $products = [];
 
     // Método para obter a lista de produtos no carrinho
-    public function getProdutos(): array {
-        return $this->produtos;
+    public function getProducts(): array {
+        return $this->products;
     }
 
     // Método para adicionar um produto ao carrinho com tratamento de Exceções
-    public function adicionarProduto(Produto $produto, int $quantidade): void {
+    public function addProduct(Product $product, int $quantity): void {
         try {
-            if ($quantidade <= 0) {
+            if ($quantity <= 0) {
                 throw new InvalidArgumentException("Quantidade inválida. A quantidade deve ser maior que zero.");
             }
-            $this->produtos[] = ['produto' => $produto, 'quantidade' => $quantidade];
+            $this->products[] = ['produto' => $product, 'quantidade' => $quantity];
         } catch (InvalidArgumentException $e) {
             echo "Erro ao adicionar produto ao carrinho: " . $e->getMessage() . PHP_EOL;
         }
     }
 
     // Método para remover um produto do carrinho com tratamento de Exceções
-    public function removerProduto(Produto $produto): void {
+    public function removeProduct(Product $product): void {
         try {
             $produtoEncontrado = false;
-            foreach ($this->produtos as $key => $item) {
-                if ($item['produto'] === $produto) {
-                    unset($this->produtos[$key]);
+            foreach ($this->products as $key => $item) {
+                if ($item['produto'] === $product) {
+                    unset($this->products[$key]);
                     $produtoEncontrado = true;
                 }
             }
@@ -39,25 +39,25 @@ class CarrinhoDeCompras {
                 throw new LogicException("Produto não encontrado no carrinho.");
             }
             // Reindexa o array após a remoção
-            $this->produtos = array_values($this->produtos);
+            $this->products = array_values($this->products);
         } catch (LogicException $e) {
             echo "Erro ao remover produto do carrinho: " . $e->getMessage() . PHP_EOL;
         }
     }
 
     // Método para calcular o valor total dos produtos no carrinho
-    public function calcularTotal(): float {
+    public function calculateTotal(): float {
         $total = 0.0;
-        foreach ($this->produtos as $item) {
-            $total += $item['produto']->getPreco() * $item['quantidade'];
+        foreach ($this->products as $item) {
+            $total += $item['produto']->getProductPrice() * $item['quantidade'];
         }
         return $total;
     }
 
     // Método para mostrar os produtos no carrinho
-    public function mostrarProdutos(): void {
-        foreach ($this->produtos as $item) {
-            echo $item['produto']->getNome() . " - Quantidade: " . $item['quantidade'] . PHP_EOL;
+    public function showProducts(): void {
+        foreach ($this->products as $item) {
+            echo $item['produto']->getProductName() . " - Quantidade: " . $item['quantidade'] . PHP_EOL;
         }
     }
 }
