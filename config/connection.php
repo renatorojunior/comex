@@ -1,9 +1,7 @@
 <?php
 
-$databasePath = __DIR__ . '/../../database.sqlite';
+$databasePath = __DIR__ . '/../database/database.sqlite';
 $pdo = new PDO('sqlite:' . $databasePath);
-
-echo 'Conectado';
 
 $createTableSql = '
     CREATE TABLE IF NOT EXISTS clients (
