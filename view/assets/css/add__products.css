@@ -1,0 +1,13 @@
+
+.input-box:nth-child(1){
+    width: 30%;
+}
+
+.input-box:nth-child(2) {
+    width: 66%;
+}
+
+.input-box:nth-child(3), .input-box:nth-child(4) {
+    width: 48%;
+}
+

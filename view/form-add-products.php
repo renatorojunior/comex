@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Salva o novo produto no banco de dados
     $addProduct = $pdoProductRepository->save($product);
 
-    if ($addProduct === true) {        
+    if ($addProduct === true) {
         header("Location: {$_SERVER['PHP_SELF']}");
         exit();
     } else {
@@ -32,12 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/add__products.css">
     <title>Cadastro de Produtos</title>
 </head>
+
 <body>
     <div class="container">
         <div class="form-image">
@@ -51,22 +54,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="input-group">
                     <div class="input-box">
                         <label for="code">Código do Produto:</label>
-                        <input type="text" id="code" name="code" placeholder="Digite o código" required><br>
+                        <input type="text" id="code" name="code" placeholder="Digite o código" required>
                     </div>
 
                     <div class="input-box">
                         <label for="name">Nome do Produto:</label>
-                        <input type="text" id="name" name="name" placeholder="Digite o nome do produto" required><br>
+                        <input type="text" id="name" name="name" placeholder="Digite o nome do produto" required>
                     </div>
 
                     <div class="input-box">
                         <label for="price">Preço do Produto:</label>
-                        <input type="number" id="price" name="price" step="0.01" placeholder="Digite o valor do produto"  required><br>
+                        <input type="number" id="price" name="price" step="0.01" placeholder="Digite o valor do produto" required>
                     </div>
 
                     <div class="input-box">
                         <label for="stock_quantity">Quantidade em Estoque:</label>
-                        <input type="number" id="stock_quantity" name="stock_quantity" placeholder="Digite a quantidade"  required><br>
+                        <input type="number" id="stock_quantity" name="stock_quantity" placeholder="Digite a quantidade" required>
                     </div>
                 </div>
                 <div class="submit-button">
@@ -76,7 +79,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </body>
+
 </html>
-
-
-

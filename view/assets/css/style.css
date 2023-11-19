@@ -55,7 +55,7 @@ body {
 }
 
 .form-title {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: end;
     position: relative;
@@ -82,19 +82,7 @@ body {
 .input-box {
     display: flex;
     flex-direction: column;
-    margin-bottom: .5rem;
-}
-
-.input-box:nth-child(1){
-    width: 30%;
-}
-
-.input-box:nth-child(2) {
-    width: 66%;
-}
-
-.input-box:nth-child(3), .input-box:nth-child(4) {
-    width: 48%;
+    margin-bottom: 1rem;
 }
 
 .input-box input {

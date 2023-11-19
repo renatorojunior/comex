@@ -2,6 +2,8 @@
 
 namespace Renato\Comex\Infrastructure\Repository;
 
+require_once __DIR__ . '/../../Domain/Repository/ClientRepository.php';
+
 use PDO;
 use Renato\Comex\Domain\Model\Client;
 use Renato\Comex\Domain\Repository\ClientRepository;
