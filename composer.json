@@ -1,7 +1,7 @@
-{
+{    
     "autoload": {
         "psr-4": {
-            "Renato\\Comex\\": "src/"
+            "Renato\\Comex\\": "path/to/src"
         }
     },
     "require-dev": {

@@ -1,4 +1,5 @@
 <?php
+
 require_once('../config/connection.php');
 require_once __DIR__ . '/../src/Infrastructure/Repository/PdoProductRepository.php';
 require_once __DIR__ . '/../src/Domain/Model/Product.php';
@@ -9,14 +10,15 @@ use Renato\Comex\Domain\Model\Product;
 $pdoProductRepository = new PdoProductRepository($pdo);
 
 // Verifica se o formulário foi submetido
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $code = $_POST['code'];
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $stockQuantity = $_POST['stock_quantity'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {    
+    $id = null; 
+    $code = isset($_POST['code']) ? $_POST['code'] : '';
+    $name = isset($_POST['name']) ? $_POST['name'] : '';
+    $price = isset($_POST['price']) ? $_POST['price'] : '';
+    $stockQuantity = isset($_POST['stock_quantity']) ? $_POST['stock_quantity'] : '';
 
     // Cria uma instância do objeto Product
-    $product = new Product($code, $name, (float)$price, (int)$stockQuantity);
+    $product = new Product($id, $code, $name, (float)$price, (int)$stockQuantity);
 
     // Salva o novo produto no banco de dados
     $addProduct = $pdoProductRepository->save($product);
@@ -37,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/add__styles.css">
     <link rel="stylesheet" href="./assets/css/add__products.css">
     <title>Cadastro de Produtos</title>
 </head>

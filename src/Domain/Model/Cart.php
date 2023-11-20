@@ -26,31 +26,31 @@ class Cart {
     }
 
     // Método para remover um produto do carrinho com tratamento de Exceções
-    public function removeProduct(Product $product): void {
-        try {
-            $produtoEncontrado = false;
-            foreach ($this->products as $key => $item) {
-                if ($item['produto'] === $product) {
-                    unset($this->products[$key]);
-                    $produtoEncontrado = true;
-                }
+    public function removeProduct(string $productId): void {
+        $produtoEncontrado = false;
+        foreach ($this->products as $key => $item) {
+            if ($item['produto']->getProductId() === $productId) {
+                unset($this->products[$key]);
+                $produtoEncontrado = true;
             }
-            if (!$produtoEncontrado) {
-                throw new LogicException("Produto não encontrado no carrinho.");
-            }
-            // Reindexa o array após a remoção
-            $this->products = array_values($this->products);
-        } catch (LogicException $e) {
-            echo "Erro ao remover produto do carrinho: " . $e->getMessage() . PHP_EOL;
         }
+    
+        if (!$produtoEncontrado) {
+            throw new LogicException("Produto não encontrado no carrinho.");
+        }
+    
+        // Reindexa o array após a remoção
+        $this->products = array_values($this->products);
     }
 
     // Método para calcular o valor total dos produtos no carrinho
-    public function calculateTotal(): float {
-        $total = 0.0;
+    public function getTotalAmount(): int {
+        $total = 0;
+    
         foreach ($this->products as $item) {
             $total += $item['produto']->getProductPrice() * $item['quantidade'];
         }
+    
         return $total;
     }
 

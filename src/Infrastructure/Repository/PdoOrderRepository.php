@@ -2,6 +2,8 @@
 
 namespace Renato\Comex\Infrastructure\Repository;
 
+require_once __DIR__ . '/../../Domain/Repository/OrderRepository.php';
+
 use PDO;
 use Renato\Comex\Domain\Model\{Order, Product};
 use Renato\Comex\Domain\Repository\OrderRepository;
@@ -103,6 +105,7 @@ class PdoOrderRepository implements OrderRepository
 
         foreach ($productsData as $productData) {
             $product = new Product(
+                $productData['id'],
                 $productData['code'],
                 $productData['name'],
                 (float)$productData['price'],

@@ -11,7 +11,7 @@ interface ProductRepository
     public function findProductByCode(string $code): ?product;    
     public function save(Product $product): bool;
     public function remove(Product $product): bool;
-    public function update(Product $product): bool;
+    public function updateStockQuantity($productId, $newStockQuantity): void;
 }
 
 ?>

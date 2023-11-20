@@ -43,8 +43,8 @@ class PdoProductRepository implements ProductRepository
 
     public function findProductByCode(string $code): ?Product
     {
-        $stmt = $this->connection->prepare('SELECT * FROM products WHERE code = :product_code');
-        $stmt->bindParam(':product_code', $code, PDO::PARAM_STR);
+        $stmt = $this->connection->prepare('SELECT * FROM products WHERE product_code = :code');
+        $stmt->bindParam(':code', $code, PDO::PARAM_STR);
         $stmt->execute();
 
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -52,21 +52,22 @@ class PdoProductRepository implements ProductRepository
         return $data ? $this->createProductFromData($data) : null;
     }
 
+
     public function save(Product $product): bool
-{
-    $code = $product->getProductCode();
-    $name = $product->getProductName();
-    $price = $product->getProductPrice();
-    $stockQuantity = $product->getStockQuantity();
+    {
+        $code = $product->getProductCode();
+        $name = $product->getProductName();
+        $price = $product->getProductPrice();
+        $stockQuantity = $product->getStockQuantity();
 
-    $stmt = $this->connection->prepare('INSERT INTO products (product_code, product_name, price, stock_quantity) VALUES (:code, :name, :price, :stock_quantity)');
-    $stmt->bindParam(':code', $code, PDO::PARAM_STR);
-    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-    $stmt->bindParam(':price', $price, PDO::PARAM_INT);
-    $stmt->bindParam(':stock_quantity', $stockQuantity, PDO::PARAM_INT);
+        $stmt = $this->connection->prepare('INSERT INTO products (product_code, product_name, price, stock_quantity) VALUES (:code, :name, :price, :stock_quantity)');
+        $stmt->bindParam(':code', $code, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+        $stmt->bindParam(':stock_quantity', $stockQuantity, PDO::PARAM_INT);
 
-    return $stmt->execute();
-}
+        return $stmt->execute();
+    }
 
     public function remove(Product $product): bool
     {
@@ -76,24 +77,19 @@ class PdoProductRepository implements ProductRepository
         return $stmt->execute();
     }
 
-    public function update(Product $product): bool
+    public function updateStockQuantity($productId, $newStockQuantity): void
     {
-        $stmt = $this->connection->prepare('UPDATE products SET code = :product_code, product_name = :product_name, price = :price, stock_quantity = :stock_quantity WHERE id = :id');
-        $stmt->bindParam(':id', $product->getProductId(), PDO::PARAM_INT);
-        $stmt->bindParam(':product_code', $product->getProductCode(), PDO::PARAM_STR);
-        $stmt->bindParam(':product_name', $product->getProductName(), PDO::PARAM_STR);
-        $stmt->bindParam(':price', $product->getProductPrice(), PDO::PARAM_INT);
-        $stmt->bindParam(':stock_quantity', $product->getStockQuantity(), PDO::PARAM_INT);
-
-        return $stmt->execute();
+        $sql = "UPDATE products SET stock_quantity = :newStockQuantity WHERE id = :productId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':newStockQuantity', $newStockQuantity, PDO::PARAM_INT);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     // Método auxiliar para instânciar um Produto a partir dos dados do banco
     private function createProductFromData(array $data): Product
     {
-        $product = new Product($data['product_code'], $data['product_name'], (float)$data['price'], (int)$data['stock_quantity']);
-        
-        return $product;
+        return new Product($data['id'], $data['product_code'], $data['product_name'], (float)$data['price'], (int)$data['stock_quantity']);
     }
 }
 
